@@ -10,9 +10,11 @@ class BoggleWordListTestCase(TestCase):
 
     def test_word_list(self):
         """Test that word list creation works, and check_word function works."""
+        sample_boggle = BoggleWordList()
 
-        self.assertFalse("Write test expectations for this!")
-
+        self.assertEqual(len(sample_boggle.words), len(BoggleWordList.read_dict('/usr/share/dict/words')))
+        self.assertFalse(sample_boggle.check_word('ZVAD'), False)
+        self.assertTrue(sample_boggle.check_word('TOAST'), True)
 
 class BoggleBoardTestCase(TestCase):
     """Tests about the BoggleBoard."""

@@ -2,17 +2,28 @@
 <html lang="en">
 <head>
   <title>Boggle</title>
-  <link rel="stylesheet" href="/static/boggle.css">
+  <link rel="stylesheet" href="/static/bogg le.css">
 </head>
 
 <body>
 
 <main>
+  <!-- Displays a gameboard generated from a BoggleBoard instance  -->
   <table class="board">
-  <!-- fill in -->
+  {% for row in board %}
+  <tr>
+    {% for letter in row %}
+    <td>{{letter}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
   </table>
 
-  <!-- form here -->
+  <!-- Form for the user to submit word entries -->
+  <form action="/api/score-word" method="POST">
+    <input type="text" name='entry'>
+    <button>GO</button>
+  </form>
 </main>
 
 <p class="msg">
