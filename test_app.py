@@ -1,5 +1,5 @@
 from unittest import TestCase
-from flask import session
+from flask import session, jsonify
 
 from app import app, boards
 from app import SESS_BOARD_UUID_KEY
@@ -37,17 +37,20 @@ class BoggleAppTestCase(TestCase):
         # TODO - Ask why we use self.client instead of app.client (as the notes indicate)
         with self.client as client:
             
-            print('board key:', boards.keys())
-            key = boards.keys()
-            #print('board:', boards[session[SESS_BOARD_UUID_KEY]])
-            print("board value", boards[key[0]])
-            # print("session[SESS_BOARD]", session[SESS_BOARD_UUID_KEY])
-            # uuid_key = session[SESS_BOARD_UUID_KEY]
-            # current_board = boards[uuid_key]
-            # current_board[0] = ['C','A','T','S','A']
-            # response = client.post('/api/score-word', data={'entry': 'CAT'})
-            # print(response)
-            # api_response = response.get_data(as_text=True)
-            # print(api_response)
+            # print('board key:', boards)
+            #make request to root route, 
+            client.get("/")
+            
+            # print("client get", test)
+            uuid_key = session[SESS_BOARD_UUID_KEY]
+            current_board = boards[uuid_key]
+            current_board[0] = ['C','A','T','S','A']
 
+            response = client.post('/api/score-word', data={'entry': 'CAT'})
+            api_response = response.get_data(as_text=True)
+
+            print("type of api_res,", api_response)
+
+            api_expected = {"result": "ok", "word": "CAT"}
             # self.assertIn(word, current_board)
+            self.assertIsNot(api_response, '{\n  "result": "ok", \n  "word": "CAT"\n}')

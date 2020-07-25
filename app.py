@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify
 from uuid import uuid4
 
 from boggle import BoggleWordList, BoggleBoard
@@ -59,4 +59,4 @@ def json_route():
     elif not word_on_board:
         return jsonify(result='not-on-board')
     else:
-        return jsonify(result='ok', word=f"{word_exists}")
+        return jsonify(result='ok', word=f"{word}")
